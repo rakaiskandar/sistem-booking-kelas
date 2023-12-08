@@ -1,0 +1,3 @@
+admin admin123 admin
+raka raka123 user
+kamu kamu123 user
