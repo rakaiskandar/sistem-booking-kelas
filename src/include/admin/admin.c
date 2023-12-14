@@ -8,7 +8,7 @@ int count_user(int *user_count) {
     FILE *fp;
     users u;
 
-    fp = fopen("data/user.txt", "r");
+    fp = fopen("../data/user.txt", "r");
 
     if (fp == NULL) {
         fprintf(stderr, "Tidak dapat membuka file.\n");
@@ -30,7 +30,7 @@ void view_user(int user){
     FILE *file;
 	users u;
 
-	file = fopen("data/user.txt", "r");
+	file = fopen("../data/user.txt", "r");
 	if (file == NULL)
 	{
 		fprintf(stderr, "Tidak dapat membuka file\n");
@@ -68,7 +68,7 @@ void add_user(users u[]){
 		strcpy(u[i].role, "user");
 	}
 	
-	file = fopen("data/user.txt", "a");
+	file = fopen("../data/user.txt", "a");
 
 	if (file == NULL){
 		fprintf(stderr, "Tidak dapat membuka file\n");
@@ -86,7 +86,7 @@ void add_user(users u[]){
 }
 
 void edit_user(){
-	FILE *file = fopen("data/user.txt", "r");
+	FILE *file = fopen("../data/user.txt", "r");
 	users u;
 
 	if (file == NULL){
@@ -101,7 +101,7 @@ void edit_user(){
 	scanf("%s", &username_new);
 
 	// Create a temporary filename
-    char temp_filename[] = "data/user_tmp.txt";
+    char temp_filename[] = "../data/user_tmp.txt";
     FILE *temp_file = fopen(temp_filename, "w");
 
     if (temp_file == NULL) {
@@ -133,13 +133,13 @@ void edit_user(){
 	fclose(temp_file);
 
     // Remove the original file
-    if (remove("data/user.txt") != 0) {
+    if (remove("../data/user.txt") != 0) {
         perror("Error removing the original file");
         exit(EXIT_FAILURE);
     }
 
     // Rename the temporary file to the original filename
-    if (rename(temp_filename, "data/user.txt") != 0) {
+    if (rename(temp_filename, "../data/user.txt") != 0) {
         perror("Error renaming the temporary file");
         exit(EXIT_FAILURE);
     }
@@ -152,7 +152,7 @@ void edit_user(){
 }
 
 void delete_user(){
-	FILE *file = fopen("data/user.txt", "r+");
+	FILE *file = fopen("../data/user.txt", "r+");
     
 	if (file == NULL) {
         fprintf(stderr, "Tidak dapat membuka file\n");
@@ -166,7 +166,7 @@ void delete_user(){
     scanf("%s", username_delete);
 
     // Create a temporary filename
-    char temp_filename[] = "data/user_tmp.txt";
+    char temp_filename[] = "../data/user_tmp.txt";
 
     FILE *temp_file = fopen(temp_filename, "w");
     if (temp_file == NULL) {
@@ -194,13 +194,13 @@ void delete_user(){
         printf("'%s' tidak ditemukan.\n", username_delete);
     } else {
         // Remove the original file
-        if (remove("data/user.txt") != 0) {
+        if (remove("../data/user.txt") != 0) {
             perror("Error removing the original file");
             exit(EXIT_FAILURE);
         }
 
         // Rename the temporary file to the original filename
-        if (rename(temp_filename, "data/user.txt") != 0) {
+        if (rename(temp_filename, "../data/user.txt") != 0) {
             perror("Error renaming the temporary file");
             exit(EXIT_FAILURE);
         }
@@ -210,7 +210,7 @@ void delete_user(){
 }
 
 void sort_user(users u[], int user){
-	FILE *file = fopen("data/user.txt", "r");
+	FILE *file = fopen("../data/user.txt", "r");
 
     if (file == NULL) {
         fprintf(stderr, "Tidak dapat membuka file..\n");
@@ -322,7 +322,7 @@ void search_user(){
 	printf("Masukkan nama user: ");
 	scanf("%s", &username);
 
-	file = fopen("data/user.txt", "r");
+	file = fopen("../data/user.txt", "r");
 	if (file == NULL)
 	{
 		fprintf(stderr, "Tidak dapat membuka file\n");
@@ -342,7 +342,7 @@ void search_user(){
 }
 
 void delete_records(){
-	FILE *file = fopen("data/data.txt", "r+");
+	FILE *file = fopen("../data/data.txt", "r+");
     
 	if (file == NULL) {
         fprintf(stderr, "Tidak dapat membuka file\n");
@@ -356,7 +356,7 @@ void delete_records(){
     scanf("%s", &kode_kelas);
 
     // Create a temporary filename
-    char temp_filename[] = "data/hapus_tmp.txt";
+    char temp_filename[] = "../data/hapus_tmp.txt";
     FILE *temp_file = fopen(temp_filename, "w");
 	if (temp_file == NULL) {
         fclose(file);
@@ -383,13 +383,13 @@ void delete_records(){
         printf("'%s' tidak ditemukan.\n", kode_kelas);
     } else {
         // Remove the original file
-        if (remove("data/data.txt") != 0) {
+        if (remove("../data/data.txt") != 0) {
             perror("Error removing the original file");
             exit(EXIT_FAILURE);
         }
 
         // Rename the temporary file to the original filename
-        if (rename(temp_filename, "data/data.txt") != 0) {
+        if (rename(temp_filename, "../data/data.txt") != 0) {
             perror("Error renaming the temporary file");
             exit(EXIT_FAILURE);
         }
@@ -402,7 +402,7 @@ void view_all_records(int user){
 	FILE *file;
 	books b;
 
-	file = fopen("data/data.txt", "r");
+	file = fopen("../data/data.txt", "r");
 	if (file == NULL)
 	{
 		fprintf(stderr, "Tidak dapat membuka file\n");
@@ -436,7 +436,7 @@ void search_all_records(){
 	printf("Masukkan kode kelas: ");
 	scanf("%s", &ch);
 
-	file = fopen("data/data.txt", "r");
+	file = fopen("../data/data.txt", "r");
 	if (file == NULL){
 		fprintf(stderr, "Tidak dapat membuka file\n");
 		exit(EXIT_FAILURE);
@@ -459,7 +459,7 @@ void search_all_records(){
 }
 
 void sort_all_records(books b[], int user){
-	FILE *file = fopen("data/data.txt", "r");
+	FILE *file = fopen("../data/data.txt", "r");
 
     if (file == NULL) {
         fprintf(stderr, "Tidak dapat membuka file..\n");

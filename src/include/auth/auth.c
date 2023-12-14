@@ -10,7 +10,7 @@ int login(char *username, char *password)
 	users u;
 	int is_login = 0;
 
-	fp = fopen("data/user.txt", "r");
+	fp = fopen("../data/user.txt", "r");
 
 	if (fp == NULL){
 		fprintf(stderr, "Tidak dapat membuka file\n");
@@ -34,7 +34,7 @@ char get_roles(char *username, char *password){
 	users u;
 	int is_admin = 0;
 
-	fp = fopen("data/user.txt", "r");
+	fp = fopen("../data/user.txt", "r");
 	if (fp == NULL){
 		fprintf(stderr, "Tidak dapat membuka file\n");
 		exit(EXIT_FAILURE);
