@@ -30,13 +30,13 @@ cd src
 3. Compile code dengan command `gcc`:
 
 ```bash
-gcc include/user/user.c include/auth/auth.c include/admin/admin.c include/utils/utils.c main.c -o bin/main
+gcc include/user/user.c include/auth/auth.c include/admin/admin.c include/utils/utils.c main.c -o ../bin/main
 ```
 
 4. Jalankan program, dengan mengeksekusi hasil dari compile:
 
 ```bash
-bin/main
+../bin/main
 ```
 
 ## Struktur Folder
