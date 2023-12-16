@@ -39,9 +39,10 @@ void view_user(int user){
 
 	int data_found = 0;
 
+	printf("Username \tPassword \tRole\n");
 	while (fscanf(file, "%s %s %s", &u.username, &u.password, &u.role) == 3){
         if (strcmp(u.role, "user") == 0){
-		    printf("%s %s %s\n", u.username, u.password, u.role);
+		    printf("%8s %14s %12s\n", u.username, u.password, u.role);
 		    data_found++;
         }
         
@@ -76,7 +77,7 @@ void add_user(users u[]){
 	}
 
 	for (int i = 0; i < jumlah_user; i++){
-		fprintf(file, "\n%s %s %s\n", u[i].username, u[i].password, u[i].role);
+		fprintf(file, "%s %s %s\n", u[i].username, u[i].password, u[i].role);
 	}
 	
 	printf("Data User Berhasil Ditambahkan!");
@@ -145,9 +146,9 @@ void edit_user(){
     }
 
 	if (data_edited){
-		printf("Data for '%s' edited successfully.\n", u.username);
+		printf("Data '%s' berhasil diupdate.\n", u.username);
 	}else{
-		printf("'%s' not found in the file.\n", u.username);
+		printf("'%s' tidak ditemukan di file.\n", u.username);
 	}
 }
 
@@ -249,15 +250,17 @@ void sort_user(users u[], int user){
 }
 
 void print_record_user(users u[], int n){
+	printf("Username \tPassword \tRole\n");
 	for (int i = 0; i < n; i++){
-		printf("%s %s %s\n", u[i].username, u[i].password, u[i].role);
+		printf("%8s %14s %12s\n", u[i].username, u[i].password, u[i].role);
 	}
 	printf("\n");
 }
 
 void print_record_book(books b[], int n){
+	printf("Kode Kelas Nama Prodi\t Fakultas Status Pemesanan   Tanggal\n");
 	for (int i = 0; i < n; i++){
-		printf("%s %s %s %s %d %s\n", b[i].kode_kelas, b[i].nama, b[i].prodi, b[i].fakultas, b[i].status_pemesanan, b[i].tanggal);
+		printf("%10s %2s %2s %8s %18s %12s\n", b[i].kode_kelas, b[i].nama, b[i].prodi, b[i].fakultas, b[i].status_pemesanan ? "true" : "false", b[i].tanggal);
 	}
 	printf("\n");
 }
@@ -323,17 +326,18 @@ void search_user(){
 	scanf("%s", &username);
 
 	file = fopen("../data/user.txt", "r");
+
 	if (file == NULL)
 	{
 		fprintf(stderr, "Tidak dapat membuka file\n");
         exit(EXIT_FAILURE);
 	}
 
-	while (fscanf(file, "%s %s %s", &u.username, &u.password, &u.role) == 3){
-		if ((strcmp(u.role, "user") == 0) && (strcmp(u.username, username))){
-			printf("Data ditemukan!");
-			printf("\nUsername: %s", u.username);
-			printf("\nPassword: %s\n", u.password);
+	while (fscanf(file, "%s %s %s", u.username, u.password, u.role) == 3){
+		if ((strcmp(u.role, "user") == 0) && (strcmp(u.username, username) == 0)){
+			printf("Data ditemukan!\n");
+			printf("Username: %s\n", u.username);
+			printf("Password: %s\n", u.password);
 			break;
 		}
 	}
@@ -379,7 +383,8 @@ void delete_records(){
     fclose(temp_file);
 
     if (!data_deleted) {
-        remove(temp_filename);  // Remove the temporary file if no data was deleted
+		// Remove the temporary file if no data was deleted
+        remove(temp_filename);  
         printf("'%s' tidak ditemukan.\n", kode_kelas);
     } else {
         // Remove the original file
@@ -411,8 +416,9 @@ void view_all_records(int user){
 
 	int data_found = 0;
 
+	printf("Kode Kelas Nama  Prodi\t Fakultas Status Pemesanan   Tanggal\n");
 	while (fscanf(file, "%s %s %s %s %d %s", &b.kode_kelas, &b.nama, &b.prodi, &b.fakultas, &b.status_pemesanan, &b.tanggal) == 6){
-		printf("%s %s %s %s %d %s\n", b.kode_kelas, b.nama, b.prodi, b.fakultas, b.status_pemesanan, b.tanggal);
+		printf("%10s %2s %4s %8s %18s %12s\n", b.kode_kelas, b.nama, b.prodi, b.fakultas, b.status_pemesanan ? "true" : "false", b.tanggal);
 		data_found++;
 		
 		if (data_found >= user){
@@ -424,7 +430,6 @@ void view_all_records(int user){
 		printf("Tidak ada data pemesanan\n");
 	}
 	
-
 	fclose(file);
 }
 

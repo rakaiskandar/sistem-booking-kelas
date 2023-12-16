@@ -125,9 +125,9 @@ void cancel(char *username, int user){
     }
 
 	if (data_edited){
-		printf("Data for kode kelas '%s' cancel successfully.\n", ch);
+		printf("Pemesanan kode kelas '%s' berhasil dibatalkan.\n", ch);
 	}else{
-		printf("Kode kelas '%s' not found in the file.\n", ch);
+		printf("Kode kelas '%s' tidak ditemukan di file.\n", ch);
 	}
 }
 
@@ -198,8 +198,9 @@ void sorting(books b[], int left, int right, int (*compare)(const char *, const 
 }
 
 void print_record(books b[], int n){
+	printf("Kode Kelas Nama Prodi\t Fakultas Status Pemesanan   Tanggal\n");
 	for (int i = 0; i < n; i++){
-		printf("%s %s %s %s %d %s\n", b[i].kode_kelas, b[i].nama, b[i].prodi, b[i].fakultas, b[i].status_pemesanan, b[i].tanggal);
+		printf("%10s %2s %2s %8s %18s %12s\n", b[i].kode_kelas, b[i].nama, b[i].prodi, b[i].fakultas, b[i].status_pemesanan ? "true" : "false", b[i].tanggal);
 	}
 	printf("\n");
 }
@@ -275,8 +276,7 @@ void view_record(char *username, int user)
 		
 		if (data_found >= user){
 			break;
-		}
-		
+		}	
 	}
 	
 	if (data_found == 0){
@@ -298,10 +298,10 @@ void generate_report(char *username)
 	}
 
 	printf("Detail Pemesanan:");
-	printf("\nKode Kelas Nama Prodi\tFakultas Status Pemesanan  Tanggal");
+	printf("\nKode Kelas Nama Prodi\t Fakultas Status Pemesanan   Tanggal");
 	while (fscanf(file, "%s %s %s %s %d %s", &b.kode_kelas, &b.nama, &b.prodi, &b.fakultas, &b.status_pemesanan, &b.tanggal) == 6){
 		if ((strcmp(b.nama, username) == 0) && b.status_pemesanan != 0){
-			printf("\n%s \t   %s %s \t%s \t   %s \t  %s", b.kode_kelas, b.nama, b.prodi, b.fakultas, b.status_pemesanan? "true":"false", b.tanggal);
+			printf("\n%10s %2s %2s %8s %18s %12s", b.kode_kelas, b.nama, b.prodi, b.fakultas, b.status_pemesanan? "true" : "false", b.tanggal);
 		}
 	}
 	printf("\n");
