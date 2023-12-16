@@ -38,7 +38,16 @@ gcc include/user/user.c include/auth/auth.c include/admin/admin.c include/utils/
 ```bash
 ../bin/main
 ```
+5. Login dengan `username` dan `password`
+```bash
+untuk admin
+username: admin
+password: admin123
 
+untuk user
+username: kamu
+password: kamu123
+```
 ## Struktur Folder
 
 - `src`: berisikan source code utama dan fitur - fitur program
