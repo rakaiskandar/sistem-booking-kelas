@@ -47,4 +47,4 @@ gcc include/user/user.c include/auth/auth.c include/admin/admin.c include/utils/
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/rakaiskandar/sistem-booking-kelas/blob/main/LICENSE)
