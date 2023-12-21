@@ -8,6 +8,7 @@ Sistem Informasi Booking Kelas yang diimplementasikan dengan bahasa C. Program i
 - Login
 - Booking Kelas
 - Batal Booking Kelas
+- Kembalikan Kelas
 - Cari Data Booking 
 - Sortir Data Booking
 - Generate Laporan Booking Kelas
