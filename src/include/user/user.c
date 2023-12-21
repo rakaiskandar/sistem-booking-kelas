@@ -259,6 +259,21 @@ void sort_record(books b[], char *username, int user)
 			break;
 		}
 
+		file = fopen("../data/data.txt", "w");
+
+		if (file == NULL)
+		{
+			fprintf(stderr, "Tidak dapat membuka file..\n");
+			exit(EXIT_FAILURE);
+		}
+
+		for (int i = 0; i < num_records; i++)
+		{
+			fprintf(file, "%s %s %s %s %d %s\n", b[i].kode_kelas, b[i].nama, b[i].prodi, b[i].fakultas, &b[i].status_pemesanan, b[i].tanggal);
+		}
+
+		fclose(file);
+
 		printf("Data tersortir:\n");
 		print_record(b, num_records);
 	}

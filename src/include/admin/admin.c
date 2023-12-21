@@ -283,6 +283,21 @@ void sort_user(users u[], int user)
 			break;
 		}
 
+		file = fopen("../data/user.txt", "w");
+
+		if (file == NULL)
+		{
+			fprintf(stderr, "Tidak dapat membuka file..\n");
+			exit(EXIT_FAILURE);
+		}
+
+		for (int i = 0; i < num_records; i++)
+		{
+			fprintf(file, "%s %s %s\n", u[i].username, u[i].password, u[i].role);
+		}
+
+		fclose(file);
+		
 		printf("Data tersortir:\n");
 		print_record_user(u, num_records);
 	}
@@ -577,6 +592,21 @@ void sort_all_records(books b[], int user)
 			sorting_book(b, 0, num_records - 1, compare_tanggal_desc);
 			break;
 		}
+
+		file = fopen("../data/data.txt", "w");
+
+		if (file == NULL)
+		{
+			fprintf(stderr, "Tidak dapat membuka file..\n");
+			exit(EXIT_FAILURE);
+		}
+
+		for (int i = 0; i < num_records; i++)
+		{
+			fprintf(file, "%s %s %s %s %d %s\n", b[i].kode_kelas, b[i].nama, b[i].prodi, b[i].fakultas, &b[i].status_pemesanan, b[i].tanggal);
+		}
+
+		fclose(file);
 
 		printf("Data tersortir:\n");
 		print_record_book(b, num_records);
