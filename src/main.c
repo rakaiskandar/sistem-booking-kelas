@@ -50,9 +50,10 @@ int main(void)
 			printf("\n2. Lihat Pesanan");
 			printf("\n3. Lihat Kelas Yang Sudah Dipesan");
 			printf("\n4. Batalkan Pesanan");
-			printf("\n5. Cari Pesanan");
-			printf("\n6. Sortir Pesanan");
-			printf("\n7. Inisiasi Laporan");
+			printf("\n5. Kembalikan Kelas");
+			printf("\n6. Cari Pesanan");
+			printf("\n7. Sortir Pesanan");
+			printf("\n8. Inisiasi Laporan");
 			printf("\n0. Keluar");
 
 			printf("\nPilih Menu: ");
@@ -74,21 +75,26 @@ int main(void)
 					system("cls");
 					break;
 				case 4:
-					cancel(username, total_book);
+					cancel(username);
 					system("pause");
 					system("cls");
 					break;
 				case 5:
-					search_record(username);
+					retrieve_class(username);
 					system("pause");
 					system("cls");
 					break;
 				case 6:
-					sort_record(b, username, total_book);
+					search_record(username);
 					system("pause");
 					system("cls");
 					break;
 				case 7:
+					sort_record(b, username, total_book);
+					system("pause");
+					system("cls");
+					break;
+				case 8:
 					generate_report(username);
 					system("pause");
 					system("cls");

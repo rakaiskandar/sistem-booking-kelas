@@ -4,8 +4,10 @@
 #define USER_H
 
 void booking(books b[], char *username);
-void cancel(char *username, int user);
+void retrieve_class(char *username);
+void cancel(char *username);
 void view_class();
+void delete_class(char *kode_kelas);
 void view_record(char *username, int user);
 void sort_record(books b[], char *username, int user);
 void sorting(books b[], int left, int right, int (*compare)(const char *, const char *));

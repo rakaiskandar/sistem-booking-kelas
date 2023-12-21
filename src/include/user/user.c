@@ -17,9 +17,9 @@ void booking(books b[], char *username){
 	for (int i = 0; i < jumlah_booking; i++){
 		printf("Masukkan kode kelas: ");
 		scanf("%s", &b[i].kode_kelas);
-		printf("Masukkan prodi: ");
+		printf("Masukkan prodi pemesan: ");
 		scanf("%s", &b[i].prodi);
-		printf("Masukkan fakultas: ");
+		printf("Masukkan gedung kelas: ");
 		scanf("%s", &b[i].fakultas);
 
 		strcpy(b[i].nama, username);
@@ -40,7 +40,7 @@ void booking(books b[], char *username){
 	for (int i = 0; i < jumlah_booking; i++){
 		bool is_booked = false;
 
-		rewind(file);
+		rewind(file_class);
 
 		while (fscanf(file_class, "%s %s", c.kode_kelas, c.gedung) == 2){
 			if ((strcmp(b[i].kode_kelas, c.kode_kelas) == 0)){
@@ -63,18 +63,20 @@ void booking(books b[], char *username){
 			fprintf(file, "%s %s %s %s %d %s\n", b[i].kode_kelas, b[i].nama, b[i].prodi, b[i].fakultas, b[i].status_pemesanan, b[i].tanggal);
 			fprintf(file_class, "%s %s\n", b[i].kode_kelas, b[i].fakultas);
 
-			printf("Selamat, Booking Kelas Berhasil");
+			printf("Selamat, Booking Kelas Berhasil!!");
 			printf("\n");
 		}
 	}
 
 	fclose(file);
+	fclose(file_class);
 }
 
-void cancel(char *username, int user){
+void cancel(char *username){
 	FILE *file = fopen("../data/data.txt", "r+");
-	books b;
 
+	books b;
+	
 	if (file == NULL){
 		fprintf(stderr, "Tidak dapat membuka file\n");
 		exit(EXIT_FAILURE);
@@ -98,12 +100,12 @@ void cancel(char *username, int user){
 
 	while (fscanf(file, "%s %s %s %s %d %s", b.kode_kelas, b.nama, b.prodi, b.fakultas, &b.status_pemesanan, b.tanggal) == 6){
 		if ((strcmp(b.nama, username) == 0) && (strcmp(b.kode_kelas, ch) == 0)){
-			// Modify the data as needed
 			b.status_pemesanan = 0;
 
 			fprintf(temp_file, "%s %s %s %s %d %s\n", b.kode_kelas, b.nama, b.prodi, b.fakultas, b.status_pemesanan, b.tanggal);
-
+			
 			data_edited = 1; 
+			delete_class(ch);
 		}else{
 			fprintf(temp_file, "%s %s %s %s %d %s\n", b.kode_kelas, b.nama, b.prodi, b.fakultas, b.status_pemesanan, b.tanggal);
 		}
@@ -112,22 +114,79 @@ void cancel(char *username, int user){
 	fclose(file);
 	fclose(temp_file);
 
-    // Remove the original file
-    if (remove("../data/data.txt") != 0) {
-        perror("Error removing the original file");
-        exit(EXIT_FAILURE);
-    }
-
-    // Rename the temporary file to the original filename
-    if (rename(temp_filename, "../data/data.txt") != 0) {
-        perror("Error renaming the temporary file");
-        exit(EXIT_FAILURE);
-    }
-
-	if (data_edited){
-		printf("Pemesanan kode kelas '%s' berhasil dibatalkan.\n", ch);
-	}else{
+	if (!data_edited){
+		remove(temp_filename);
 		printf("Kode kelas '%s' tidak ditemukan di file.\n", ch);
+	}else{
+		// Remove the original file
+		if (remove("../data/data.txt") != 0) {
+			perror("Error removing the original file");
+			exit(EXIT_FAILURE);
+		}
+		// Rename the temporary file to the original filename
+		if (rename(temp_filename, "../data/data.txt") != 0) {
+			perror("Error renaming the temporary file");
+			exit(EXIT_FAILURE);
+		}
+
+		printf("Pemesanan kode kelas '%s' berhasil dibatalkan.\n", ch);
+	}
+}
+
+void retrieve_class(char *username){
+	FILE *file = fopen("../data/data.txt", "r+");
+
+	books b;
+	
+	if (file == NULL){
+		fprintf(stderr, "Tidak dapat membuka file\n");
+		exit(EXIT_FAILURE);
+	}
+
+	int data_edited = 0;
+
+	// Create a temporary filename
+    char temp_filename[] = "../data/book_tmp.txt";
+    FILE *temp_file = fopen(temp_filename, "w");
+
+    if (temp_file == NULL) {
+        fclose(file);
+        fprintf(stderr, "Tidak dapat membuka file temporary\n");
+        exit(EXIT_FAILURE);
+    }
+
+	char ch[20];
+	printf("Masukkan kode kelas: ");
+	scanf("%s", &ch);
+
+	while (fscanf(file, "%s %s %s %s %d %s", b.kode_kelas, b.nama, b.prodi, b.fakultas, &b.status_pemesanan, b.tanggal) == 6){
+		if ((strcmp(b.nama, username) == 0) && (strcmp(b.kode_kelas, ch) == 0)){
+			data_edited = 1; 
+			delete_class(ch);
+		}else{
+			fprintf(temp_file, "%s %s %s %s %d %s\n", b.kode_kelas, b.nama, b.prodi, b.fakultas, b.status_pemesanan, b.tanggal);
+		}
+	}
+
+	fclose(file);
+	fclose(temp_file);
+
+	if (!data_edited){
+		remove(temp_filename);
+		printf("Kode kelas '%s' tidak ditemukan di file.\n", ch);
+	}else{
+		// Remove the original file
+		if (remove("../data/data.txt") != 0) {
+			perror("Error removing the original file");
+			exit(EXIT_FAILURE);
+		}
+		// Rename the temporary file to the original filename
+		if (rename(temp_filename, "../data/data.txt") != 0) {
+			perror("Error renaming the temporary file");
+			exit(EXIT_FAILURE);
+		}
+
+		printf("Kelas '%s' dikembalikan.\n", ch);
 	}
 }
 
@@ -198,7 +257,7 @@ void sorting(books b[], int left, int right, int (*compare)(const char *, const 
 }
 
 void print_record(books b[], int n){
-	printf("Kode Kelas Nama Prodi\t Fakultas Status Pemesanan   Tanggal\n");
+	printf("Kode Kelas Nama Prodi\t Gedung Status Pemesanan   Tanggal\n");
 	for (int i = 0; i < n; i++){
 		printf("%10s %2s %2s %8s %18s %12s\n", b[i].kode_kelas, b[i].nama, b[i].prodi, b[i].fakultas, b[i].status_pemesanan ? "true" : "false", b[i].tanggal);
 	}
@@ -247,11 +306,62 @@ void view_class(){
         exit(EXIT_FAILURE);
 	}
 
+	printf("Kode Kelas Gedung\n");
 	while (fscanf(file, "%s %s", &c.kode_kelas, &c.gedung) == 2){
-		printf("%s %s\n", c.kode_kelas, c.gedung);
+		printf("%10s %4s\n", c.kode_kelas, c.gedung);
 	}
 
 	fclose(file);
+}
+
+void delete_class(char *kode_kelas){
+	FILE *file = fopen("../data/kelas.txt", "r+");
+
+	classes c;
+	
+	if (file == NULL){
+		fprintf(stderr, "Tidak dapat membuka file\n");
+		exit(EXIT_FAILURE);
+	}
+
+	int data_edited = 0;
+
+	// Create a temporary filename
+    char temp_filename[] = "../data/class_tmp.txt";
+    FILE *temp_file = fopen(temp_filename, "w");
+
+    if (temp_file == NULL) {
+        fclose(file);
+        fprintf(stderr, "Tidak dapat membuka file temporary\n");
+        exit(EXIT_FAILURE);
+    }
+
+	while (fscanf(file, "%s %s", &c.kode_kelas, &c.gedung) == 2){
+		if (strcmp(c.kode_kelas, kode_kelas) == 0){
+			data_edited = 1; 
+		}else{
+			fprintf(temp_file, "%s %s\n", c.kode_kelas, c.gedung);
+		}
+	}
+
+	fclose(file);
+	fclose(temp_file);
+
+	if (!data_edited){
+		remove(temp_filename);
+	}else{
+		// Remove the original file
+		if (remove("../data/kelas.txt") != 0) {
+			perror("Error removing the original file");
+			exit(EXIT_FAILURE);
+		}
+
+		// Rename the temporary file to the original filename
+		if (rename(temp_filename, "../data/kelas.txt") != 0) {
+			perror("Error renaming the temporary file");
+			exit(EXIT_FAILURE);
+		}	
+	}
 }
 
 void view_record(char *username, int user)
