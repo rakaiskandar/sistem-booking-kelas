@@ -15,7 +15,8 @@ int main(void)
 	char username[12], password[12];
 	int is_login, is_admin;
 
-	do{
+	do
+	{
 		printf(" ___       __   _______   ___       ________  ________  _____ ______   _______      \n");
 		printf("|\\  \\     |\\  \\|\\  ___ \\ |\\  \\     |\\   ____\\|\\   __  \\|\\   _ \\  _   \\|\\  ___ \\     \n");
 		printf("\\ \\  \\    \\ \\  \\ \\   __/|\\ \\  \\    \\ \\  \\___|\\ \\  \\|\\  \\ \\  \\\\\\__\\ \\  \\ \\   __/|\n");
@@ -33,15 +34,18 @@ int main(void)
 		is_login = login(username, password);
 		is_admin = get_roles(username, password);
 
-		if (is_login != 1){
+		if (is_login != 1)
+		{
 			printf("Username atau password salah!\n");
 			system("cls");
 		}
-		
+
 	} while (is_login != 1);
-	
-	if (is_admin == 0){
-		do{
+
+	if (is_admin == 0)
+	{
+		do
+		{
 			printf("==================================\n");
 			printf("\tSistem Booking Kelas\n");
 			printf("\tSelamat Datang %s\n", username);
@@ -58,56 +62,59 @@ int main(void)
 
 			printf("\nPilih Menu: ");
 			scanf("%d", &pilihan);
-			switch (pilihan){
-				case 1:
-					booking(b, username);
-					system("pause");
-					system("cls");
-					break;
-				case 2:
-					view_record(username, total_book);
-					system("pause");
-					system("cls");
-					break;
-				case 3:
-					view_class();
-					system("pause");
-					system("cls");
-					break;
-				case 4:
-					cancel(username);
-					system("pause");
-					system("cls");
-					break;
-				case 5:
-					retrieve_class(username);
-					system("pause");
-					system("cls");
-					break;
-				case 6:
-					search_record(username);
-					system("pause");
-					system("cls");
-					break;
-				case 7:
-					sort_record(b, username, total_book);
-					system("pause");
-					system("cls");
-					break;
-				case 8:
-					generate_report(username);
-					system("pause");
-					system("cls");
-					break;
-				case 0:
-					exit(0);
-					break;
-				default:
-					printf("Pilihan anda salah!");
-					break;
+			switch (pilihan)
+			{
+			case 1:
+				booking(b, username);
+				system("pause");
+				system("cls");
+				break;
+			case 2:
+				view_record(username, total_book);
+				system("pause");
+				system("cls");
+				break;
+			case 3:
+				view_class();
+				system("pause");
+				system("cls");
+				break;
+			case 4:
+				cancel(username);
+				system("pause");
+				system("cls");
+				break;
+			case 5:
+				retrieve_class(username);
+				system("pause");
+				system("cls");
+				break;
+			case 6:
+				search_record(username);
+				system("pause");
+				system("cls");
+				break;
+			case 7:
+				sort_record(b, username, total_book);
+				system("pause");
+				system("cls");
+				break;
+			case 8:
+				generate_report(username);
+				system("pause");
+				system("cls");
+				break;
+			case 0:
+				exit(0);
+				break;
+			default:
+				printf("Pilihan anda salah!");
+				break;
 			}
 		} while (pilihan != 0);
-	}else{
+	}
+	else
+	{
 		total_user = count_user(&total_user);
 		do
 		{
@@ -129,65 +136,65 @@ int main(void)
 
 			printf("\nPilih Menu: ");
 			scanf("%d", &pilihan);
-			switch (pilihan){
-				case 1:
-					view_user(total_user);
-					system("pause");
-					system("cls");
-					break;
-				case 2:
-					add_user(u);
-					system("pause");
-					system("cls");
-					break;
-				case 3:
-					edit_user();
-					system("pause");
-					system("cls");
-					break;
-				case 4:
-					delete_user();
-					system("pause");
-					system("cls");
-					break;
-				case 5:
-					sort_user(u, total_user);
-					system("pause");
-					system("cls");
-					break;
-				case 6:
-					search_user();
-					system("pause");
-					system("cls");
-					break;
-				case 7:
-					view_all_records(total_book);
-					system("pause");
-					system("cls");
-					break;
-				case 8:
-					delete_records();
-					system("pause");
-					system("cls");
-					break;
-				case 9:
-					search_all_records();
-					system("pause");
-					system("cls");
-					break;
-				case 10:
-					sort_all_records(b, total_book);
-					system("pause");
-					system("cls");
-					break;
-				case 0:
-					exit(0);
-					break;
-				default:
-					printf("Pilihan anda salah!");
-					break;
+			switch (pilihan)
+			{
+			case 1:
+				view_user(total_user);
+				system("pause");
+				system("cls");
+				break;
+			case 2:
+				add_user(u);
+				system("pause");
+				system("cls");
+				break;
+			case 3:
+				edit_user();
+				system("pause");
+				system("cls");
+				break;
+			case 4:
+				delete_user();
+				system("pause");
+				system("cls");
+				break;
+			case 5:
+				sort_user(u, total_user);
+				system("pause");
+				system("cls");
+				break;
+			case 6:
+				search_user();
+				system("pause");
+				system("cls");
+				break;
+			case 7:
+				view_all_records(total_book);
+				system("pause");
+				system("cls");
+				break;
+			case 8:
+				delete_records();
+				system("pause");
+				system("cls");
+				break;
+			case 9:
+				search_all_records();
+				system("pause");
+				system("cls");
+				break;
+			case 10:
+				sort_all_records(b, total_book);
+				system("pause");
+				system("cls");
+				break;
+			case 0:
+				exit(0);
+				break;
+			default:
+				printf("Pilihan anda salah!");
+				break;
 			}
 		} while (pilihan != 0);
 	}
-
 }
