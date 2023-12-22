@@ -14,6 +14,6 @@ void sorting(books b[], int left, int right, int (*compare)(const char *, const 
 void print_record(books b[], int n);
 int partition(books b[], int left, int right, int (*compare)(const char *, const char *));
 void search_record(char *username);
-void generate_report(char *username);
+void generate_report(char *username, int user);
 
 #endif

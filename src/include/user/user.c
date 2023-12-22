@@ -131,7 +131,7 @@ void cancel(char *username)
 	if (!data_edited)
 	{
 		remove(temp_filename);
-		printf("Kode kelas '%s' tidak ditemukan di file.\n", ch);
+		printf("Kode kelas '%s' tidak ditemukan\n", ch);
 	}
 	else
 	{
@@ -200,7 +200,7 @@ void retrieve_class(char *username)
 	if (!data_edited)
 	{
 		remove(temp_filename);
-		printf("Kode kelas '%s' tidak ditemukan di file.\n", ch);
+		printf("Kode kelas '%s' tidak ditemukan\n", ch);
 	}
 	else
 	{
@@ -269,7 +269,7 @@ void sort_record(books b[], char *username, int user)
 
 		for (int i = 0; i < num_records; i++)
 		{
-			fprintf(file, "%s %s %s %s %d %s\n", b[i].kode_kelas, b[i].nama, b[i].prodi, b[i].fakultas, &b[i].status_pemesanan, b[i].tanggal);
+			fprintf(file, "%s %s %s %s %d %s\n", b[i].kode_kelas, b[i].nama, b[i].prodi, b[i].fakultas, b[i].status_pemesanan, b[i].tanggal);
 		}
 
 		fclose(file);
@@ -279,7 +279,7 @@ void sort_record(books b[], char *username, int user)
 	}
 	else
 	{
-		printf("No records found in the file.\n");
+		printf("Kamu belum memesan kelas\n");
 	}
 }
 
@@ -454,12 +454,11 @@ void view_record(char *username, int user)
 	}
 
 	int data_found = 0;
-
 	while (fscanf(file, "%s %s %s %s %d %s", &b.kode_kelas, &b.nama, &b.prodi, &b.fakultas, &b.status_pemesanan, &b.tanggal) == 6)
 	{
 		if ((strcmp(b.nama, username) == 0) && b.status_pemesanan != 0)
 		{
-			printf("%s %s %s %s %d %s\n", b.kode_kelas, b.nama, b.prodi, b.fakultas, b.status_pemesanan, b.tanggal);
+			printf("%10s %2s %2s %8s %18d %12s\n", b.kode_kelas, b.nama, b.prodi, b.fakultas, b.status_pemesanan, b.tanggal);
 			data_found++;
 		}
 
@@ -477,7 +476,7 @@ void view_record(char *username, int user)
 	fclose(file);
 }
 
-void generate_report(char *username)
+void generate_report(char *username, int user)
 {
 	FILE *file;
 	books b;
@@ -489,15 +488,32 @@ void generate_report(char *username)
 		exit(EXIT_FAILURE);
 	}
 
-	printf("Detail Pemesanan:");
-	printf("\nKode Kelas Nama Prodi\t Fakultas Status Pemesanan   Tanggal");
+	int data_found = 0;
+
+	printf("Detail Pemesanan:\n");
 	while (fscanf(file, "%s %s %s %s %d %s", &b.kode_kelas, &b.nama, &b.prodi, &b.fakultas, &b.status_pemesanan, &b.tanggal) == 6)
 	{
 		if ((strcmp(b.nama, username) == 0) && b.status_pemesanan != 0)
 		{
 			printf("\n%10s %2s %2s %8s %18s %12s", b.kode_kelas, b.nama, b.prodi, b.fakultas, b.status_pemesanan ? "true" : "false", b.tanggal);
+			data_found++;
+		}
+
+		if (data_found >= user)
+		{
+			break;
 		}
 	}
+
+	if (data_found == 0)
+	{
+		printf("Kamu belum memesan kelas\n");
+	}
+	else
+	{
+		printf("\nKode Kelas Nama Prodi\t Fakultas Status Pemesanan   Tanggal\n"); 
+	}
+
 	printf("\n");
 
 	fclose(file);

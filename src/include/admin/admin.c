@@ -91,7 +91,7 @@ void add_user(users u[])
 		fprintf(file, "%s %s %s\n", u[i].username, u[i].password, u[i].role);
 	}
 
-	printf("Data User Berhasil Ditambahkan!");
+	printf("Data user berhasil ditambahkan!");
 	printf("\n");
 
 	fclose(file);
@@ -110,9 +110,9 @@ void edit_user()
 
 	int data_edited = 0;
 
-	char username_new[20], password_new[20];
+	char username[20], password_new[20], username_new[20];
 	printf("Masukkan username yang akan diedit: ");
-	scanf("%s", &username_new);
+	scanf("%s", &username);
 
 	// Create a temporary filename
 	char temp_filename[] = "../data/user_tmp.txt";
@@ -127,13 +127,16 @@ void edit_user()
 
 	while (fscanf(file, "%s %s %s", u.username, u.password, u.role) == 3)
 	{
-		if ((strcmp(u.role, "user") == 0) && (strcmp(u.username, username_new) == 0))
+		if ((strcmp(u.role, "user") == 0) && (strcmp(u.username, username) == 0))
 		{
 
 			// Modify the data as needed
+			printf("Masukkan username baru: ");
+			scanf("%s", &username_new);
 			printf("Masukkan password baru: ");
 			scanf("%s", &password_new);
 
+			strcpy(u.username, username_new);
 			strcpy(u.password, password_new);
 
 			// Write the modified data to the temporary file
@@ -167,11 +170,11 @@ void edit_user()
 
 	if (data_edited)
 	{
-		printf("Data '%s' berhasil diupdate.\n", u.username);
+		printf("Data '%s' berhasil diupdate.\n", username_new);
 	}
 	else
 	{
-		printf("'%s' tidak ditemukan di file.\n", u.username);
+		printf("'%s' tidak ditemukan di file.\n", username_new);
 	}
 }
 
@@ -241,7 +244,7 @@ void delete_user()
 			exit(EXIT_FAILURE);
 		}
 
-		printf("Data untuk '%s'berhasil dihapus.\n", username_delete);
+		printf("Data untuk '%s' berhasil dihapus.\n", username_delete);
 	}
 }
 
@@ -486,7 +489,7 @@ void delete_records()
 			exit(EXIT_FAILURE);
 		}
 
-		printf("Data untuk '%s'berhasil dihapus.\n", kode_kelas);
+		printf("Data untuk '%s' berhasil dihapus.\n", kode_kelas);
 	}
 }
 
@@ -603,7 +606,7 @@ void sort_all_records(books b[], int user)
 
 		for (int i = 0; i < num_records; i++)
 		{
-			fprintf(file, "%s %s %s %s %d %s\n", b[i].kode_kelas, b[i].nama, b[i].prodi, b[i].fakultas, &b[i].status_pemesanan, b[i].tanggal);
+			fprintf(file, "%s %s %s %s %d %s\n", b[i].kode_kelas, b[i].nama, b[i].prodi, b[i].fakultas, b[i].status_pemesanan, b[i].tanggal);
 		}
 
 		fclose(file);

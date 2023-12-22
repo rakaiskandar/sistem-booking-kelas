@@ -100,7 +100,7 @@ int main(void)
 				system("cls");
 				break;
 			case 8:
-				generate_report(username);
+				generate_report(username, total_book);
 				system("pause");
 				system("cls");
 				break;
