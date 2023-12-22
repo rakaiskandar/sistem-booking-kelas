@@ -458,7 +458,7 @@ void view_record(char *username, int user)
 	{
 		if ((strcmp(b.nama, username) == 0) && b.status_pemesanan != 0)
 		{
-			printf("%10s %2s %2s %8s %18d %12s\n", b.kode_kelas, b.nama, b.prodi, b.fakultas, b.status_pemesanan, b.tanggal);
+			printf("%s %s %s %s %d %s\n", b.kode_kelas, b.nama, b.prodi, b.fakultas, b.status_pemesanan, b.tanggal);
 			data_found++;
 		}
 
